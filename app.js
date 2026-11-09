@@ -1,8 +1,8 @@
 // KIVORA marketplace front end. Add Supabase project URL and public anon key below.
-const SUPABASE_URL = ;https://izqgesrvwhdftumenhtz.supabase.co
+const SUPABASE_URL = ;"https://izqgesrvwhdftumenhtz.supabase.co"
 
 
-const SUPABASE_ANON_KEY = ;sb_publishable_hoHkcLlcElwXzDhPLnoutQ_gvUgfP2z
+const SUPABASE_ANON_KEY = ;"YOUR_sb_publishable_hoHkcLlcElwXzDhPLnoutQ_gvUgfP2z"
 const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
 const db = configured && window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const sample = [
