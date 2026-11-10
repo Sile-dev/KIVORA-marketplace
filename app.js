@@ -30,23 +30,85 @@ const sample = [
 {id:"p23",name:"Kids Building Toy Set",category:"Toys & Games",price:18500,image_url:img("photo-1587654780291-39c9404d746b"),store_name:"PLAY HOUSE"},
 {id:"p24",name:"Car Care Accessories",category:"Automotive",price:16500,image_url:img("photo-1486262715619-67b85e0b08d3"),store_name:"AUTO CORNER"}
 ];
+const searchAliases = {
+  "phones":"smartphones tablets mobile iphone samsung android",
+  "phone":"smartphones tablets mobile iphone samsung android",
+  "mobile":"smartphones tablets phones",
+  "laptop":"computers accessories notebook macbook hp dell lenovo",
+  "computer":"computers accessories laptop desktop pc",
+  "tv":"televisions electronics home entertainment smart tv",
+  "television":"tv electronics home entertainment",
+  "headphones":"audio electronics earphones earbuds headset",
+  "earphones":"audio headphones earbuds electronics",
+  "clothes":"fashion clothing apparel outfits",
+  "dress":"fashion clothing ladies outfit",
+  "shoes":"footwear sneakers sandals heels boots",
+  "sneakers":"shoes footwear trainers",
+  "bag":"bags luggage backpack handbag",
+  "makeup":"beauty personal care cosmetics skincare",
+  "skincare":"beauty personal care cosmetics",
+  "fridge":"appliances refrigerator freezer",
+  "refrigerator":"appliances fridge freezer",
+  "furniture":"home furniture chair table sofa bed",
+  "food":"groceries drinks beverages pantry",
+  "grocery":"groceries food drinks",
+  "toy":"toys games kids children",
+  "book":"books stationery educational",
+  "car":"automotive vehicle auto accessories",
+  "camera":"cameras photography lenses",
+  "watch":"jewellery watches accessories",
+  "jewelry":"jewellery watches accessories",
+  "jewellery":"jewellery watches accessories",
+  "baby":"baby kids children maternity",
+  "pet":"pet supplies animal",
+  "tool":"tools hardware equipment",
+  "office":"office supplies stationery",
+  "gym":"sports fitness exercise workout",
+  "fitness":"sports fitness exercise workout",
+  "instrument":"musical instruments music"
+};
+function searchText(p){
+ const raw = `${p.name||""} ${p.category||""} ${p.store_name||""} ${p.description||""}`.toLowerCase();
+ const expanded = Object.entries(searchAliases).filter(([word,alts])=>raw.includes(word)||alts.split(" ").some(a=>raw.includes(a))).map(([word,alts])=>word+" "+alts).join(" ");
+ return raw+" "+expanded;
+}
+function matchesSearch(p,q){
+ if(!q)return true;
+ const text=searchText(p), terms=q.toLowerCase().split(/\\s+/).filter(Boolean);
+ return terms.every(term=>text.includes(term) || Object.entries(searchAliases).some(([key,alts])=>term===key && alts.split(" ").some(a=>text.includes(a))));
+}
 let products=[...sample], category="All", search="", cart=JSON.parse(localStorage.getItem("kivora_cart")||"[]"), favorites=JSON.parse(localStorage.getItem("kivora_favorites")||"[]"), mode="login", currentUser=null;
 const $=id=>document.getElementById(id), money=n=>"₦"+Number(n||0).toLocaleString("en-NG");
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function openModal(id){$("overlay").classList.add("show");$(id).classList.add("show")}
 function closeAll(){$("overlay").classList.remove("show");document.querySelectorAll(".modal").forEach(x=>x.classList.remove("show"));$("cartDrawer").classList.remove("open")}
 function msg(id,text){$(id).textContent=text}
-function card(p){const fav=favorites.includes(String(p.id));return `<article class="product-card"><div class="product-image"><img src="${esc(p.image_url||"")}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.opacity='.18'"><span class="product-badge">${esc(p.badge||"KIVORA FIND")}</span><button class="heart ${fav?"saved":""}" data-fav="${esc(p.id)}" aria-label="Add to favourites">${fav?"♥":"♡"}</button></div><div class="product-info"><span class="product-category">${esc(p.category)}</span><h3>${esc(p.name)}</h3><div class="product-price">${money(p.price)}</div><div class="product-rating">★★★★★ <span style="color:#999">Preview listing</span></div><button data-add="${esc(p.id)}">ADD TO CART +</button></div></article>`}
+function card(p){const fav=favorites.includes(String(p.id));return `<article class="product-card"><div class="product-image"><img src="${esc(p.image_url||"")}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.opacity='.18'"><span class="product-badge">${esc(p.badge||"KIVORA FIND")}</span><button class="heart ${fav?"saved":""}" data-fav="${esc(p.id)}" aria-label="Add to favourites">${fav?"♥":"♡"}</button></div><div class="product-info"><span class="product-category">${esc(p.category)}</span><h3>${esc(p.name)}</h3><div class="product-price">${money(p.price)}</div><div class="product-rating">★★★★★ <span style="color:#999">${p.seller_id?"Seller listing":"Catalogue preview"}</span></div><div class="fine" style="margin-top:4px">${esc(p.store_name||"KIVORA seller")}</div><button data-add="${esc(p.id)}">ADD TO CART +</button></div></article>`}
 function renderRail(id,list){$(id).innerHTML=list.map(card).join("")}
 function renderProducts(){
- const list=products.filter(p=>(category==="All"||p.category===category)&&(`${p.name} ${p.category} ${p.store_name||""}`).toLowerCase().includes(search.toLowerCase()));
+ const list=products.filter(p=>(category==="All"||p.category===category)&&matchesSearch(p,search));
  $("productGrid").innerHTML=list.map(card).join("");$("productCount").textContent=`${list.length} items`;$("productTitle").textContent=category==="All"?"Explore all products":category;
  $("emptyState").hidden=list.length>0;
 }
 function renderAll(){renderRail("popularRail",products.slice(0,10));renderRail("phonesRail",products.filter(p=>p.category==="Smartphones"));renderRail("computersRail",products.filter(p=>p.category==="Computers & Accessories"));renderRail("fashionRail",products.filter(p=>["Fashion","Shoes & Bags"].includes(p.category)));renderProducts();renderCart()}
 async function loadProducts(){
- if(db){const {data,error}=await db.from("products").select("id,name,category,price,description,image_url,store_name").eq("is_active",true).order("created_at",{ascending:false});if(!error&&data?.length)products=[...data,...sample];else if(error)msg("loadMessage","Showing catalogue previews. Live seller listings could not be loaded: "+error.message);else msg("loadMessage","Showing the KIVORA starter collection. Seller listings will appear here as they are added.");}
- else msg("loadMessage","KIVORA starter collection • Sample prices are indicative previews, not confirmed seller offers. Seller listings appear here when Supabase is configured.");
+ if(db){
+   const {data,error}=await db.from("products")
+     .select("id,name,category,price,description,image_url,store_name,seller_id,created_at")
+     .eq("is_active",true).order("created_at",{ascending:false});
+   if(!error){
+     const live=data||[];
+     // Live seller listings appear first; sample cards remain clearly labelled previews.
+     products=[...live,...sample.filter(s=>!live.some(p=>p.name?.toLowerCase()===s.name.toLowerCase()))];
+     msg("loadMessage",`${live.length} live seller listing${live.length===1?"":"s"} connected • Catalogue previews are illustrative, not confirmed offers.`);
+   } else {
+     products=[...sample];
+     msg("loadMessage","Showing catalogue previews. Live seller listings could not be loaded. Check the Supabase products table and permissions.");
+   }
+ } else {
+   products=[...sample];
+   msg("loadMessage","KIVORA catalogue preview • Seller listings will appear automatically when connected to Supabase. Preview prices and stock are not live offers.");
+ }
  renderAll();
 }
 function saveCart(){localStorage.setItem("kivora_cart",JSON.stringify(cart));renderCart()}
@@ -64,7 +126,7 @@ document.addEventListener("click",e=>{
  const scroll=e.target.closest("[data-scroll]");if(scroll){const rail=$(scroll.dataset.scroll);rail.scrollBy({left:scroll.dataset.dir==="right"?rail.clientWidth*.8:-rail.clientWidth*.8,behavior:"smooth"})}
  if(e.target.matches("[data-close]")||e.target===$("overlay"))closeAll();
 });
-$("searchForm").addEventListener("submit",e=>{e.preventDefault();search=$("searchInput").value.trim();renderProducts();$("popular").scrollIntoView({behavior:"smooth"})});
+$("searchForm").addEventListener("submit",e=>{e.preventDefault();search=$("searchInput").value.trim().replace(/\\s+/g," ");category="All";document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active",b.dataset.category==="All"));renderProducts();$("popular").scrollIntoView({behavior:"smooth"})});
 $("accountBtn").onclick=$("quickLogin").onclick=()=>startAuth("buyer","login");
 $("ordersBtn").onclick=()=>{if(!currentUser){startAuth("buyer","login");msg("authMessage","Log in to view your account and order history.");}else alert("Order history will appear here after secure checkout and order processing are enabled.");};
 $("quickSell").onclick=$("sellerBannerBtn").onclick=$("footerSell").onclick=()=>{if(!currentUser){startAuth("seller","signup");msg("authMessage","Create a seller account to open your KIVORA store.");return}if(currentUser.user_metadata?.account_type!=="seller"){startAuth("seller","signup");msg("authMessage","Use a seller account to list products.");return}openModal("sellerModal")};
@@ -77,3 +139,36 @@ $("productForm").addEventListener("submit",async e=>{e.preventDefault();if(!db){
 $("year").textContent=new Date().getFullYear();
 renderAll();loadProducts();
 if(db){db.auth.getSession().then(({data})=>{if(data.session)currentUser=data.session.user});db.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null})}
+
+
+// KIVORA AI — secure server-side AI customer care
+(function initKivoraAI(){
+  const toggle=$("kivoraChatToggle"), panel=$("kivoraChat"), close=$("kivoraChatClose");
+  if(!toggle||!panel)return;
+  const messages=$("kivoraChatMessages"), input=$("kivoraChatInput"), form=$("kivoraChatForm"), send=$("kivoraChatSend");
+  const history=[];
+  function show(){panel.classList.add("open");panel.setAttribute("aria-hidden","false");input.focus()}
+  function hide(){panel.classList.remove("open");panel.setAttribute("aria-hidden","true")}
+  function bubble(text,who){const el=document.createElement("div");el.className=who==="user"?"user-message":"ai-message";el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight;return el}
+  toggle.addEventListener("click",()=>panel.classList.contains("open")?hide():show());
+  close.addEventListener("click",hide);
+  document.querySelectorAll("[data-ai-prompt]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.aiPrompt;form.requestSubmit()}));
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();const question=input.value.trim();if(!question||send.disabled)return;
+    input.value="";bubble(question,"user");history.push({role:"user",content:question});
+    const typing=bubble("KIVORA AI is thinking…","ai");typing.classList.add("ai-typing");send.disabled=true;
+    try{
+      if(!db)throw new Error("The support service is not connected yet. Please use the WhatsApp Help Centre for assistance.");
+      const productContext=(products||[]).slice(0,100).map(p=>({name:p.name,category:p.category,price:p.price,currency:"NGN",store:p.store_name,description:p.description||"",is_preview:!!p.badge}));
+      const {data,error}=await db.functions.invoke("kivora-support",{body:{message:question,history:history.slice(-10,-1),products:productContext}});
+      if(error)throw error;
+      const answer=data?.reply;
+      if(!answer)throw new Error(data?.error||"I couldn't prepare a response. Please try again.");
+      typing.classList.remove("ai-typing");typing.textContent=answer;history.push({role:"assistant",content:answer});
+      if(history.length>20)history.splice(0,2);
+    }catch(err){
+      typing.classList.remove("ai-typing");
+      typing.textContent=(err.message||"Support is temporarily unavailable.")+" You can also contact the KIVORA Help Centre on WhatsApp.";
+    }finally{send.disabled=false;messages.scrollTop=messages.scrollHeight;input.focus()}
+  });
+})();

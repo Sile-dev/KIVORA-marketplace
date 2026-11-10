@@ -34,7 +34,13 @@
   </nav>
 </header>
 <nav class="category-nav" id="categoryNav">
-  <button data-category="All" class="active">All categories</button><button data-category="Smartphones">Phones & tablets</button><button data-category="Computers & Accessories">Computers</button><button data-category="Electronics">Electronics</button><button data-category="Fashion">Fashion</button><button data-category="Shoes & Bags">Shoes & bags</button><button data-category="Beauty">Health & beauty</button><button data-category="Home & Furniture">Home & living</button><button data-category="Sports & Fitness">Sports</button>
+  <button data-category="All" class="active">All categories</button>
+  <button data-category="Smartphones">Phones & tablets</button><button data-category="Computers & Accessories">Computers</button>
+  <button data-category="Electronics">Electronics</button><button data-category="Fashion">Fashion</button>
+  <button data-category="Shoes & Bags">Shoes & bags</button><button data-category="Beauty">Beauty</button>
+  <button data-category="Home & Furniture">Home & living</button><button data-category="Groceries">Groceries</button>
+  <button data-category="Toys & Games">Toys & games</button><button data-category="Automotive">Automotive</button>
+  <button data-category="Other">More</button>
 </nav>
 
 <main class="page-wrap">
@@ -42,17 +48,27 @@
     <aside class="side-categories">
       <div class="side-title">SHOP BY CATEGORY</div>
       <button data-category="Smartphones"><span>▣</span> Phones & Tablets <b>›</b></button>
-      <button data-category="Computers & Accessories"><span>⌨</span> Computing <b>›</b></button>
-      <button data-category="Electronics"><span>◉</span> Electronics <b>›</b></button>
-      <button data-category="Fashion"><span>♧</span> Fashion <b>›</b></button>
+      <button data-category="Computers & Accessories"><span>⌨</span> Computers & Accessories <b>›</b></button>
+      <button data-category="Electronics"><span>◉</span> Electronics & Audio <b>›</b></button>
+      <button data-category="Fashion"><span>♧</span> Fashion & Clothing <b>›</b></button>
       <button data-category="Shoes & Bags"><span>◈</span> Shoes & Bags <b>›</b></button>
-      <button data-category="Beauty"><span>✿</span> Health & Beauty <b>›</b></button>
+      <button data-category="Beauty"><span>✿</span> Beauty & Personal Care <b>›</b></button>
       <button data-category="Home & Furniture"><span>⌂</span> Home & Furniture <b>›</b></button>
-      <button data-category="Sports & Fitness"><span>⚑</span> Sports & Fitness <b>›</b></button>
-      <button data-category="Jewellery & Watches"><span>◇</span> Watches & Jewellery <b>›</b></button>
+      <button data-category="Sports & Fitness"><span>⚑</span> Sports & Outdoors <b>›</b></button>
+      <button data-category="Jewellery & Watches"><span>◇</span> Jewellery & Watches <b>›</b></button>
       <button data-category="Toys & Games"><span>☆</span> Toys & Games <b>›</b></button>
       <button data-category="Automotive"><span>⚙</span> Automotive <b>›</b></button>
-      <button data-category="Groceries"><span>＋</span> Groceries <b>›</b></button>
+      <button data-category="Groceries"><span>＋</span> Groceries & Drinks <b>›</b>
+      <button data-category="Baby & Kids"><span>♧</span> Baby & Kids <b>›</b></button>
+      <button data-category="Books & Stationery"><span>▤</span> Books & Stationery <b>›</b></button>
+      <button data-category="Appliances"><span>▣</span> Home Appliances <b>›</b></button>
+      <button data-category="Cameras & Photography"><span>◎</span> Cameras & Photography <b>›</b></button>
+      <button data-category="Office Supplies"><span>▥</span> Office Supplies <b>›</b></button>
+      <button data-category="Tools & Hardware"><span>⚒</span> Tools & Hardware <b>›</b></button>
+      <button data-category="Travel & Luggage"><span>▱</span> Travel & Luggage <b>›</b></button>
+      <button data-category="Pet Supplies"><span>♡</span> Pet Supplies <b>›</b></button>
+      <button data-category="Musical Instruments"><span>♫</span> Musical Instruments <b>›</b></button>
+      <button data-category="Industrial & Business"><span>⚙</span> Business & Industrial <b>›</b></button></button>
     </aside>
 
     <section class="hero-stage">
@@ -129,12 +145,38 @@
   <div class="copyright">© <span id="year"></span> KIVORA. All rights reserved. <span>Secure checkout will be enabled after payment setup.</span></div>
 </footer>
 
+
+<!-- KIVORA AI customer care -->
+<button id="kivoraChatToggle" class="kivora-chat-toggle" aria-label="Chat with KIVORA AI">
+  <span class="chat-spark">✦</span><span>ASK KIVORA AI</span><i>●</i>
+</button>
+<section id="kivoraChat" class="kivora-chat" aria-label="KIVORA AI customer care" aria-hidden="true">
+  <header class="kivora-chat-head">
+    <div class="ai-avatar">K</div><div class="ai-heading"><b>KIVORA AI</b><small><span></span> Customer care · Usually replies instantly</small></div>
+    <button id="kivoraChatClose" aria-label="Close chat">×</button>
+  </header>
+  <div class="kivora-chat-intro"><b>How can we help?</b><p>Ask about products, accounts, orders, selling on KIVORA or anything else.</p></div>
+  <div class="kivora-chat-quick">
+    <button data-ai-prompt="How do I create a buyer account?">Create an account</button>
+    <button data-ai-prompt="How can I sell products on KIVORA?">Become a seller</button>
+    <button data-ai-prompt="How do I find a product?">Find a product</button>
+  </div>
+  <div id="kivoraChatMessages" class="kivora-chat-messages" aria-live="polite">
+    <div class="ai-message">Hello! I'm KIVORA AI. Ask me anything about shopping or using the marketplace.</div>
+  </div>
+  <form id="kivoraChatForm" class="kivora-chat-form">
+    <input id="kivoraChatInput" maxlength="1200" autocomplete="off" placeholder="Type your question…" aria-label="Your question">
+    <button id="kivoraChatSend" type="submit" aria-label="Send message">➤</button>
+  </form>
+  <div class="kivora-chat-foot">AI can make mistakes. Never share your password or payment PIN.</div>
+</section>
+
 <div id="overlay" class="overlay"></div>
 <aside id="cartDrawer" class="drawer"><div class="drawer-head"><div><small>KIVORA SHOPPING BAG</small><h3>Your cart</h3></div><button class="x" data-close>×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-bottom"><div class="total"><span>Subtotal</span><b id="cartTotal">₦0</b></div><button id="checkoutBtn" class="primary-btn full">CONTINUE TO CHECKOUT →</button><p class="fine">You can browse and add products without an account. Sign in is required to continue. Secure payment is not live yet.</p></div></aside>
 
 <section id="authModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">WELCOME TO KIVORA</small><h2 id="authTitle">Your account, your finds.</h2><div class="tabs"><button class="active" data-mode="login">Log in</button><button data-mode="signup">Create account</button></div><form id="authForm"><label>Account type<select id="accountType"><option value="buyer">Buyer account</option><option value="seller">Seller account</option></select></label><label>Email address<input id="authEmail" type="email" required placeholder="you@example.com"></label><label>Password<input id="authPassword" type="password" minlength="6" required placeholder="At least 6 characters"></label><button id="authSubmit" class="primary-btn full">LOG IN</button></form><p id="authMessage" class="notice"></p><p class="fine">Your account is managed securely by Supabase Auth.</p></section>
 
-<section id="sellerModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">KIVORA SELLER STUDIO</small><h2>List your product</h2><p class="fine">Upload a real product photo and accurate details. Your listing will appear in the marketplace when saved successfully.</p><form id="productForm"><label>Product name<input id="pName" required maxlength="100" placeholder="e.g. Samsung Galaxy S23 Ultra"></label><label>Category<select id="pCategory"><option>Smartphones</option><option>Computers & Accessories</option><option>Electronics</option><option>Fashion</option><option>Shoes & Bags</option><option>Beauty</option><option>Home & Furniture</option><option>Sports & Fitness</option><option>Jewellery & Watches</option><option>Toys & Games</option><option>Automotive</option><option>Groceries</option><option>Other</option></select></label><label>Price (NGN)<input id="pPrice" type="number" min="1" required placeholder="e.g. 250000"></label><label>Description<textarea id="pDescription" maxlength="1000" required placeholder="Describe the product, condition, storage, size or other details…"></textarea></label><label>Product photo<input id="pImage" type="file" accept="image/png,image/jpeg,image/webp" required></label><img id="imagePreview" class="preview" alt="Selected product preview" hidden><button id="productSubmit" class="primary-btn full">UPLOAD PRODUCT</button></form><p id="sellerMessage" class="notice"></p></section>
+<section id="sellerModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">KIVORA SELLER STUDIO</small><h2>List your product</h2><p class="fine">Upload a real product photo and accurate details. Your listing will appear in the marketplace when saved successfully.</p><form id="productForm"><label>Product name<input id="pName" required maxlength="100" placeholder="e.g. Samsung Galaxy S23 Ultra"></label><label>Category<select id="pCategory"><option>Smartphones</option><option>Computers & Accessories</option><option>Electronics</option><option>Fashion</option><option>Shoes & Bags</option><option>Beauty</option><option>Home & Furniture</option><option>Sports & Fitness</option><option>Jewellery & Watches</option><option>Toys & Games</option><option>Automotive</option><option>Groceries</option><option>Baby & Kids</option><option>Books & Stationery</option><option>Appliances</option><option>Cameras & Photography</option><option>Office Supplies</option><option>Tools & Hardware</option><option>Travel & Luggage</option><option>Pet Supplies</option><option>Musical Instruments</option><option>Industrial & Business</option><option>Other</option></select></label><label>Price (NGN)<input id="pPrice" type="number" min="1" required placeholder="e.g. 250000"></label><label>Description<textarea id="pDescription" maxlength="1000" required placeholder="Describe the product, condition, storage, size or other details…"></textarea></label><label>Product photo<input id="pImage" type="file" accept="image/png,image/jpeg,image/webp" required></label><img id="imagePreview" class="preview" alt="Selected product preview" hidden><button id="productSubmit" class="primary-btn full">UPLOAD PRODUCT</button></form><p id="sellerMessage" class="notice"></p></section>
 <script>
 /* Independent intro timer: this must run even if app.js encounters an error. */
 (function () {
