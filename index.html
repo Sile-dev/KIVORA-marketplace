@@ -135,5 +135,18 @@
 <section id="authModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">WELCOME TO KIVORA</small><h2 id="authTitle">Your account, your finds.</h2><div class="tabs"><button class="active" data-mode="login">Log in</button><button data-mode="signup">Create account</button></div><form id="authForm"><label>Account type<select id="accountType"><option value="buyer">Buyer account</option><option value="seller">Seller account</option></select></label><label>Email address<input id="authEmail" type="email" required placeholder="you@example.com"></label><label>Password<input id="authPassword" type="password" minlength="6" required placeholder="At least 6 characters"></label><button id="authSubmit" class="primary-btn full">LOG IN</button></form><p id="authMessage" class="notice"></p><p class="fine">Your account is managed securely by Supabase Auth.</p></section>
 
 <section id="sellerModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">KIVORA SELLER STUDIO</small><h2>List your product</h2><p class="fine">Upload a real product photo and accurate details. Your listing will appear in the marketplace when saved successfully.</p><form id="productForm"><label>Product name<input id="pName" required maxlength="100" placeholder="e.g. Samsung Galaxy S23 Ultra"></label><label>Category<select id="pCategory"><option>Smartphones</option><option>Computers & Accessories</option><option>Electronics</option><option>Fashion</option><option>Shoes & Bags</option><option>Beauty</option><option>Home & Furniture</option><option>Sports & Fitness</option><option>Jewellery & Watches</option><option>Toys & Games</option><option>Automotive</option><option>Groceries</option><option>Other</option></select></label><label>Price (NGN)<input id="pPrice" type="number" min="1" required placeholder="e.g. 250000"></label><label>Description<textarea id="pDescription" maxlength="1000" required placeholder="Describe the product, condition, storage, size or other details…"></textarea></label><label>Product photo<input id="pImage" type="file" accept="image/png,image/jpeg,image/webp" required></label><img id="imagePreview" class="preview" alt="Selected product preview" hidden><button id="productSubmit" class="primary-btn full">UPLOAD PRODUCT</button></form><p id="sellerMessage" class="notice"></p></section>
+<script>
+/* Independent intro timer: this must run even if app.js encounters an error. */
+(function () {
+  var intro = document.getElementById("introScreen");
+  if (!intro) return;
+  window.setTimeout(function () {
+    intro.classList.add("exit");
+    window.setTimeout(function () {
+      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+    }, 900);
+  }, 7000);
+})();
+</script>
 <script src="app.js"></script>
 </body></html>
