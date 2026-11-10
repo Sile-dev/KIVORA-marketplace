@@ -1,22 +1,28 @@
 // KIVORA marketplace front end. Add Supabase project URL and public anon key below.
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://izqgesrvwhdftumenhtz.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_hoHkcLlcElwXzDhPLnoutQ_gvUgfP2z";
 const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
 const db = configured && window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const sample = [
-{id:"demo1",name:"Everyday Tote Bag",category:"Fashion",price:12500,description:"A versatile everyday carryall.",image_url:"",store_name:"KIVORA EDIT"},
-{id:"demo2",name:"Wireless Headphones",category:"Electronics",price:28500,description:"Enjoy your favourite sounds.",image_url:"",store_name:"TECH FINDS"},
-{id:"demo3",name:"Glow Skincare Set",category:"Beauty",price:18900,description:"A simple skincare set.",image_url:"",store_name:"GLOW HOUSE"},
-{id:"demo4",name:"Minimal Desk Lamp",category:"Home",price:22000,description:"A clean look for your workspace.",image_url:"",store_name:"HOME EDIT"}
+{id:"demo1",name:"Everyday Canvas Tote Bag",category:"Fashion",price:12500,description:"Roomy everyday canvas tote with reinforced handles. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=85",store_name:"KIVORA EDIT"},
+{id:"demo2",name:"Wireless Over-Ear Headphones",category:"Electronics",price:28500,description:"Comfortable wireless headphones for everyday listening. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85",store_name:"TECH FINDS"},
+{id:"demo3",name:"Skincare Essentials Set",category:"Beauty",price:18900,description:"A simple skincare set for your daily routine. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=900&q=85",store_name:"GLOW HOUSE"},
+{id:"demo4",name:"Minimal Table Lamp",category:"Home & Furniture",price:22000,description:"A clean modern lamp for your bedside or workspace. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=85",store_name:"HOME EDIT"},
+{id:"demo5",name:"Classic White Sneakers",category:"Shoes & Bags",price:32000,description:"Versatile everyday sneakers. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85",store_name:"STEP CULTURE"},
+{id:"demo6",name:"Smartphone — iPhone 15",category:"Smartphones",price:1150000,description:"Example listing. Confirm storage, condition, warranty and current price with seller. Indicative estimate only.",image_url:"https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=85",store_name:"MOBILE HUB"},
+{id:"demo7",name:"Laptop Computer",category:"Computers & Accessories",price:850000,description:"Example listing. Confirm processor, RAM, storage and condition with seller. Indicative estimate only.",image_url:"https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=900&q=85",store_name:"TECH FINDS"},
+{id:"demo8",name:"Minimal Wrist Watch",category:"Jewellery & Watches",price:45000,description:"Minimal everyday wrist watch. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85",store_name:"TIME & CO"},
+{id:"demo9",name:"Home Fitness Weights",category:"Sports & Fitness",price:27000,description:"Home workout equipment. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=85",store_name:"ACTIVE LIFE"},
+{id:"demo10",name:"Travel Backpack",category:"Fashion",price:38500,description:"Practical backpack for commuting and travel. Indicative guide price.",image_url:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",store_name:"KIVORA EDIT"}
 ];
-let products=[],category="All",search="",cart=JSON.parse(localStorage.getItem("kivora_cart")||"[]"),mode="login";
+let products=[],category="All",search="",cart=JSON.parse(localStorage.getItem("kivora_cart")||"[]"),mode="login",selectedRole="buyer",currentUser=null;
 const $=id=>document.getElementById(id),money=n=>"₦"+Number(n).toLocaleString("en-NG");
 function showModal(id){$("overlay").classList.add("show");$(id).classList.add("show")}
 function closeAll(){$("overlay").classList.remove("show");document.querySelectorAll(".modal").forEach(x=>x.classList.remove("show"));$("cartDrawer").classList.remove("open")}
 function message(id,text){$(id).textContent=text}
 async function loadProducts(){
  if(db){const {data,error}=await db.from("products").select("id,name,category,price,description,image_url,store_name").eq("is_active",true).order("created_at",{ascending:false});if(!error)products=data||[];else{$("loadMessage").textContent="Could not load live listings: "+error.message;products=sample}}
- else{products=sample;$("loadMessage").textContent="Preview mode: connect Supabase to publish and load real seller listings."}
+ else{products=sample;$("loadMessage").textContent="Showing starter catalogue previews. Sample prices are indicative estimates; live seller listings load from Supabase."}
  renderProducts();
 }
 function renderProducts(){
@@ -42,13 +48,13 @@ document.addEventListener("click",e=>{
 });
 $("searchForm").addEventListener("submit",e=>{e.preventDefault();search=$("searchInput").value.trim();renderProducts();$("shop").scrollIntoView({behavior:"smooth"})});
 $("accountBtn").onclick=()=>{showModal("authModal");setMode("login")};
-$("sellBtn").onclick=$("sellerBannerBtn").onclick=()=>{showModal("sellerModal");message("sellerMessage","")};
+$("sellBtn").onclick=$("sellerBannerBtn").onclick=()=>{if(!currentUser){selectedRole="seller";showModal("authModal");setMode("signup");message("authMessage","Create an account or log in to open your seller studio.");return}if(currentUser.user_metadata?.account_type!=="seller"){alert("This account is registered as a buyer. Create or use a seller account to list products.");return}showModal("sellerModal");message("sellerMessage","")};
 $("cartBtn").onclick=()=>{$("overlay").classList.add("show");$("cartDrawer").classList.add("open")};
-$("checkoutBtn").onclick=()=>alert("Secure checkout is not connected yet. Payment provider integration is required before accepting payments.");
+$("checkoutBtn").onclick=()=>{if(!currentUser){showModal("authModal");setMode("login");message("authMessage","Log in or create an account to continue. Secure payment is not enabled yet.");return}alert("Your cart is ready. KIVORA payment processing is not yet connected, so no payment or order has been placed.");};
 $("authForm").addEventListener("submit",async e=>{
  e.preventDefault();if(!db){message("authMessage","Connect Supabase in app.js and run supabase_setup.sql before enabling real accounts.");return}
  $("authSubmit").disabled=true;const email=$("authEmail").value.trim(),password=$("authPassword").value;
- const result=mode==="signup"?await db.auth.signUp({email,password}):await db.auth.signInWithPassword({email,password});
+ const result=mode==="signup"?await db.auth.signUp({email,password,options:{data:{account_type:selectedRole}}}):await db.auth.signInWithPassword({email,password});
  $("authSubmit").disabled=false;message("authMessage",result.error?result.error.message:(mode==="signup"?"Account created. Check your email if confirmation is enabled.":"You are signed in."));
 });
 $("pImage").addEventListener("change",()=>{const file=$("pImage").files[0];if(!file)return;if(file.size>5*1024*1024){message("sellerMessage","Image must be 5 MB or smaller.");$("pImage").value="";return}const url=URL.createObjectURL(file);$("imagePreview").src=url;$("imagePreview").hidden=false;});
@@ -69,4 +75,13 @@ $("productForm").addEventListener("submit",async e=>{
  if(insert.error){message("sellerMessage","Product record could not be saved: "+insert.error.message);return}
  message("sellerMessage","Your product is live on KIVORA!");$("productForm").reset();$("imagePreview").hidden=true;await loadProducts();
 });
+
+// Intro plays first; the marketplace stays hidden until a visitor authenticates.
+function showEntry(){ $("entryScreen").hidden=true; document.body.classList.remove("authenticated"); }
+function enterMarketplace(user){currentUser=user;$("entryScreen").hidden=true;document.body.classList.add("authenticated");if(user){const role=user.user_metadata?.account_type;if(role)selectedRole=role;} }
+function openAuthForRole(role){selectedRole=role;showModal("authModal");setMode("login");message("authMessage",`Continue as ${role}.`)}
+document.querySelectorAll("[data-role]").forEach(b=>b.addEventListener("click",()=>openAuthForRole(b.dataset.role)));
+$("backEntry").addEventListener("click",()=>{closeAll();showEntry()});
+setTimeout(()=>{const intro=$("introScreen");if(intro){intro.classList.add("exit");setTimeout(()=>{intro.remove();$("entryScreen").hidden=true;},650)}},4000);
+if(db){db.auth.getSession().then(({data})=>{if(data.session)enterMarketplace(data.session.user)});db.auth.onAuthStateChange((_event,session)=>{if(session)enterMarketplace(session.user);else{currentUser=null;document.body.classList.remove("authenticated");$("entryScreen").hidden=true;}})}
 $("year").textContent=new Date().getFullYear();renderCart();loadProducts();
