@@ -1,18 +1,36 @@
-# KIVORA Marketplace
+# KIVORA Marketplace starter
 
-This package includes the animated KIVORA opening screen, mandatory buyer/seller account entry, storefront, product search/categories, cart, Supabase email authentication, and seller product image uploads.
+This package is a more complete marketplace foundation, including:
+- Responsive storefront, category filters and search
+- Product cards that display real uploaded photos
+- Cart stored in the visitor's browser
+- Email sign-up and login using Supabase Auth
+- Seller product listing form with image preview
+- Uploads to Supabase Storage and product records in Supabase Database
+- SQL setup with row-level security policies
 
-## Upload to GitHub
-Upload every file in this folder to the ROOT of your existing `kivora` repository, replacing the old `index.html`, `style.css`, and `app.js`. Keep `supabase_setup.sql`, `README.md`, and `kivora-logo.png` too. GitHub Pages should serve `index.html` from the repository root.
+## Setup required before real use
 
-## Required Supabase setup
-1. Create a Supabase project.
-2. In SQL Editor, run all of `supabase_setup.sql`.
-3. In Project Settings → API, copy the Project URL and public anon key.
-4. Put them into `SUPABASE_URL` and `SUPABASE_ANON_KEY` at the top of `app.js`. Never use the service-role key in browser code.
-5. In Authentication → URL Configuration, add your published website URL to Site URL and Redirect URLs.
+The website is not a fully launched commercial marketplace yet. You must connect a Supabase project and later configure a payment provider, shipping, refunds, seller verification, moderation and order management.
 
-Visitors see the animated intro, then choose Buyer or Seller, then log in or sign up. The storefront is hidden until authentication succeeds. The selected account type is stored in Supabase user metadata. Sellers can upload product images to the `product-images` bucket; uploaded image URLs are shown on product cards.
+### 1. Create Supabase project
+Create a project at https://supabase.com/. In Project Settings → API, copy the Project URL and public anon key.
 
-## Important
-Real account storage and product uploads require Supabase configuration. Payment checkout is not connected, so do not accept real payments/orders yet. Configure payment processing, shipping, moderation, and seller verification before operating commercially.
+### 2. Create database and image storage
+Open Supabase → SQL Editor → New query. Copy all of `supabase_setup.sql`, run it, and confirm it succeeds. This creates the products table, storage bucket and security policies.
+
+### 3. Connect the website
+Open `app.js`. Replace `YOUR_SUPABASE_PROJECT_URL` and `YOUR_SUPABASE_ANON_KEY` with the Project URL and public anon key. Do not put a `service_role` key in browser code.
+
+### 4. Upload to GitHub
+Upload `index.html`, `style.css`, `app.js`, `supabase_setup.sql`, and `README.md` to the root of your KIVORA repository. Keep the filenames unchanged.
+
+### 5. Test
+Deploy the site, create a test account, log in, open Sell, upload a test product photo, and confirm it appears in the storefront. Test with non-sensitive test data first.
+
+## Important limitations
+- Product image upload and listing persistence work only after Supabase is configured and SQL is run.
+- The cart is currently browser-local; it is not synced between devices or saved as an order.
+- Checkout is intentionally not active. A secure payment provider and server-side order validation are required.
+- Seller profiles, seller dashboards, admin moderation, shipping integration, customer reviews, stock management, returns and notifications are future build stages.
+- Do not collect real customer payment details or promise delivery until those systems are implemented and tested.

@@ -1,8 +1,6 @@
 // KIVORA marketplace front end. Add Supabase project URL and public anon key below.
-const SUPABASE_URL = "https://izqgesrvwhdftumenhtz.supabase.co";
-
-
-const SUPABASE_ANON_KEY = "YOUR_sb_publishable_hoHkcLlcElwXzDhPLnoutQ_gvUgfP2z";
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
 const db = configured && window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const sample = [
@@ -11,7 +9,7 @@ const sample = [
 {id:"demo3",name:"Glow Skincare Set",category:"Beauty",price:18900,description:"A simple skincare set.",image_url:"",store_name:"GLOW HOUSE"},
 {id:"demo4",name:"Minimal Desk Lamp",category:"Home",price:22000,description:"A clean look for your workspace.",image_url:"",store_name:"HOME EDIT"}
 ];
-let products=[],category="All",search="",cart=JSON.parse(localStorage.getItem("kivora_cart")||"[]"),mode="login",selectedRole="buyer",currentUser=null;
+let products=[],category="All",search="",cart=JSON.parse(localStorage.getItem("kivora_cart")||"[]"),mode="login";
 const $=id=>document.getElementById(id),money=n=>"₦"+Number(n).toLocaleString("en-NG");
 function showModal(id){$("overlay").classList.add("show");$(id).classList.add("show")}
 function closeAll(){$("overlay").classList.remove("show");document.querySelectorAll(".modal").forEach(x=>x.classList.remove("show"));$("cartDrawer").classList.remove("open")}
@@ -44,13 +42,13 @@ document.addEventListener("click",e=>{
 });
 $("searchForm").addEventListener("submit",e=>{e.preventDefault();search=$("searchInput").value.trim();renderProducts();$("shop").scrollIntoView({behavior:"smooth"})});
 $("accountBtn").onclick=()=>{showModal("authModal");setMode("login")};
-$("sellBtn").onclick=$("sellerBannerBtn").onclick=()=>{if(!currentUser){showEntry();return}if(currentUser.user_metadata?.account_type!=="seller"){alert("This account is registered as a buyer. Create or use a seller account to list products.");return}showModal("sellerModal");message("sellerMessage","")};
+$("sellBtn").onclick=$("sellerBannerBtn").onclick=()=>{showModal("sellerModal");message("sellerMessage","")};
 $("cartBtn").onclick=()=>{$("overlay").classList.add("show");$("cartDrawer").classList.add("open")};
 $("checkoutBtn").onclick=()=>alert("Secure checkout is not connected yet. Payment provider integration is required before accepting payments.");
 $("authForm").addEventListener("submit",async e=>{
  e.preventDefault();if(!db){message("authMessage","Connect Supabase in app.js and run supabase_setup.sql before enabling real accounts.");return}
  $("authSubmit").disabled=true;const email=$("authEmail").value.trim(),password=$("authPassword").value;
- const result=mode==="signup"?await db.auth.signUp({email,password,options:{data:{account_type:selectedRole}}}):await db.auth.signInWithPassword({email,password});
+ const result=mode==="signup"?await db.auth.signUp({email,password}):await db.auth.signInWithPassword({email,password});
  $("authSubmit").disabled=false;message("authMessage",result.error?result.error.message:(mode==="signup"?"Account created. Check your email if confirmation is enabled.":"You are signed in."));
 });
 $("pImage").addEventListener("change",()=>{const file=$("pImage").files[0];if(!file)return;if(file.size>5*1024*1024){message("sellerMessage","Image must be 5 MB or smaller.");$("pImage").value="";return}const url=URL.createObjectURL(file);$("imagePreview").src=url;$("imagePreview").hidden=false;});
@@ -71,13 +69,4 @@ $("productForm").addEventListener("submit",async e=>{
  if(insert.error){message("sellerMessage","Product record could not be saved: "+insert.error.message);return}
  message("sellerMessage","Your product is live on KIVORA!");$("productForm").reset();$("imagePreview").hidden=true;await loadProducts();
 });
-
-// Intro plays first; the marketplace stays hidden until a visitor authenticates.
-function showEntry(){$("entryScreen").hidden=false;document.body.classList.remove("authenticated")}
-function enterMarketplace(user){currentUser=user;$("entryScreen").hidden=true;document.body.classList.add("authenticated");if(user){const role=user.user_metadata?.account_type;if(role)selectedRole=role;} }
-function openAuthForRole(role){selectedRole=role;showModal("authModal");setMode("login");message("authMessage",`Continue as ${role}.`)}
-document.querySelectorAll("[data-role]").forEach(b=>b.addEventListener("click",()=>openAuthForRole(b.dataset.role)));
-$("backEntry").addEventListener("click",()=>{closeAll();showEntry()});
-setTimeout(()=>{const intro=$("introScreen");if(intro){intro.classList.add("exit");setTimeout(()=>{intro.remove();showEntry()},650)}},4000);
-if(db){db.auth.getSession().then(({data})=>{if(data.session)enterMarketplace(data.session.user)});db.auth.onAuthStateChange((_event,session)=>{if(session)enterMarketplace(session.user);else{document.body.classList.remove("authenticated");showEntry()}})}
 $("year").textContent=new Date().getFullYear();renderCart();loadProducts();
