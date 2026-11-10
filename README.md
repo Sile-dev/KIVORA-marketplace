@@ -57,3 +57,20 @@ OpenAI API usage may incur charges under the API account. The assistant does not
 
 ### Deploying from a phone
 The ZIP includes the Edge Function source. Supabase's web dashboard may not provide a direct editor/deploy flow for Edge Functions in every account. If you only have a phone, the easiest reliable option is to use GitHub Codespaces or another browser-based terminal to run the CLI commands above.
+
+
+## Passwordless registration and login (new)
+- Registration asks for name, email, phone, account type, country, state, city and optional street/postcode. No password is created.
+- Both registration and later login use a one-time code sent to the email address. The code proves inbox access; never share it.
+- After successful code verification, the app saves the member profile in `public.profiles`.
+- A separate welcome/registration email is not automatically sent by the browser code. Configure Supabase SMTP and an Auth email template/provider if you want a branded email separate from the one-time code.
+- Run the updated `supabase_setup.sql` in Supabase SQL Editor to create the profiles table and row-level security policies. Existing products/storage setup is retained.
+
+## Optional location sharing
+- Location permission is requested only after the member presses **SHARE MY LOCATION (OPTIONAL)**. No location is requested on page load.
+- If permission is denied or unavailable, the member can still shop and use the site.
+- If granted, latitude/longitude, accuracy and timestamp are saved to that member's profile. Ordinary members can read only their own profile. An administrator can view all profiles after the project owner manually grants `is_admin=true` to the administrator account in SQL Editor.
+- Do not make location sharing a condition of browsing or purchasing. Provide a clear privacy notice before launch and define retention/deletion procedures.
+
+## Supabase email settings
+Configure production SMTP in Supabase Authentication settings and use an email template that clearly displays the one-time code (`{{ .Token }}`). The current default Supabase sender may be rate-limited. Test signup and login with separate email addresses before public launch.

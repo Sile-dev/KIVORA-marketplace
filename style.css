@@ -26,3 +26,6 @@
 .kivora-chat-form{display:flex;gap:8px;padding:11px;border-top:1px solid #eee}.kivora-chat-form input{flex:1;min-width:0;border:1px solid #e2e2e2;border-radius:22px;padding:11px 14px;font-size:12px;outline-color:#c99d4d}.kivora-chat-form button{width:40px;height:40px;border:0;border-radius:50%;background:#c99d4d;font-size:18px}
 .kivora-chat-foot{text-align:center;color:#999;font-size:9px;padding:0 8px 9px}
 @media(max-width:600px){.kivora-chat-toggle{right:13px;bottom:13px;padding:12px 14px}.kivora-chat{right:8px;bottom:70px;width:calc(100vw - 16px);height:min(590px,calc(100dvh - 88px))}}
+
+/* Passwordless account flow */
+#authModal{width:min(520px,calc(100% - 24px))}#authModal label{font-size:11px}#authModal input,#authModal select{border-radius:3px}#authModal [hidden]{display:none!important}#authModal .text-link{display:block;margin:12px auto 0;border:0;background:none;color:#98713c;font-size:10px;text-decoration:underline;cursor:pointer}#authModal .notice{line-height:1.6;overflow-wrap:anywhere}
