@@ -2,66 +2,138 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="KIVORA — discover products from independent sellers and brands.">
-<meta name="theme-color" content="#17171b"><title>KIVORA | Shop Beyond Borders</title>
+<meta name="theme-color" content="#111111">
+<meta name="description" content="KIVORA — discover phones, fashion, electronics, home essentials and more.">
+<title>KIVORA | Shop Beyond Borders</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
-<!-- Full-screen KIVORA brand introduction -->
+<!-- 7-second animated brand opening -->
 <section id="introScreen" class="intro-screen" aria-label="KIVORA introduction">
-  <div class="intro-glow"></div>
-  <div class="intro-mark" aria-hidden="true">
-    <span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span><span class="particle p4"></span><span class="particle p5"></span><span class="particle p6"></span><span class="particle p7"></span><span class="particle p8"></span><span class="particle p9"></span><span class="particle p10"></span><span class="particle p11"></span><span class="particle p12"></span>
-    <svg viewBox="0 0 120 120" role="img" aria-label="KIVORA shopping bag and key emblem"><path d="M27 45h66l-6 59H33z"/><path d="M43 46c0-14 7-23 17-23s17 9 17 23"/><path d="M60 62v20m-8-10h16"/><circle cx="60" cy="61" r="5"/><path d="M60 82l-8 8m8-8 8 8"/></svg>
-  </div>
+  <div class="intro-grid"></div><div class="intro-halo"></div>
+  <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+  <div class="roamers"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="intro-emblem"><span class="emblem-k">K</span><span class="emblem-spark">✦</span></div>
   <div class="intro-word">KIVORA</div>
-  <p class="intro-tag">SHOP BEYOND BORDERS.</p>
-  <div class="intro-loader"><i></i></div>
-</section>
-<section id="entryScreen" class="entry-screen" hidden>
-  <div class="entry-card">
-    <div class="entry-brand">KIV<span>O</span>RA</div>
-    <p class="eyebrow">YOUR MARKETPLACE STARTS HERE</p>
-    <h1>Welcome to a world of finds.</h1>
-    <p class="entry-copy">Browse freely. Create an account when you are ready to save favourites, track orders or check out.</p>
-    <div class="role-options">
-      <button class="role-card" data-role="buyer"><span class="role-icon">🛍</span><b>I'm a buyer</b><small>Discover products and shop from sellers.</small><span class="role-arrow">→</span></button>
-      <button class="role-card" data-role="seller"><span class="role-icon">🏪</span><b>I'm a seller</b><small>Showcase products and reach customers.</small><span class="role-arrow">→</span></button>
-    </div>
-    <p class="entry-foot">Already have an account? Choose your account type to log in.</p>
-  </div>
+  <div class="intro-motto">SHOP BEYOND BORDERS</div>
+  <div class="intro-loading"><span></span></div>
+  <div class="intro-caption">A NEW WORLD OF DISCOVERY</div>
 </section>
 
-<div class="announcement">WELCOME TO KIVORA <span>✦</span> DISCOVER MORE. SHOP SMARTER.</div>
-<header class="header"><a class="logo" href="#">KIV<span>O</span>RA</a><form id="searchForm" class="search"><input id="searchInput" placeholder="Search products, stores and more…" aria-label="Search"><button>⌕</button></form><nav><button id="accountBtn">♙ <small>Account</small></button><button id="sellBtn">＋ <small>Sell</small></button><button id="cartBtn">🛍 <small>Cart</small> <b id="cartCount">0</b></button></nav></header>
-<main>
-<section class="hero"><div><p class="eyebrow">A WORLD OF FINDS</p><h1>Good finds.<br><em>Great prices.</em></h1><p class="lead">Explore products you love from independent sellers and brands, all in one place.</p><a href="#shop" class="btn">Explore marketplace <span>→</span></a><p class="micro">✦ Your next favourite thing is waiting.</p></div><div class="hero-art"><div class="orbit"></div><div class="poster back"><small>THE EVERYDAY EDIT</small><strong>Find your<br>next thing.</strong><span>STYLE · TECH · HOME</span></div><div class="poster front"><small>KIVORA SELECTS</small><strong>Made for<br>your world.</strong><span>DISCOVER MORE ↗</span></div><div class="float">SHOP THE<br>WORLD ✦</div></div></section>
-<div class="benefits"><span>✦ Curated discoveries</span><span>◇ A growing seller community</span><span>↗ Easy to explore</span></div>
-<section class="section" id="shop"><div class="section-head"><div><p class="eyebrow">FIND YOUR SOMETHING</p><h2>Shop by category</h2></div><p>Explore a little. Find a lot.</p></div><div class="categories" id="categories">
-<button class="active" data-category="All">✧<small>All products</small></button>
-<button data-category="Smartphones">▣<small>Smartphones</small></button>
-<button data-category="Computers & Accessories">⌨<small>Computers</small></button>
-<button data-category="Electronics">⌁<small>Electronics</small></button>
-<button data-category="Fashion">♧<small>Fashion</small></button>
-<button data-category="Shoes & Bags">◈<small>Shoes & bags</small></button>
-<button data-category="Beauty">✿<small>Beauty</small></button>
-<button data-category="Home & Furniture">⌂<small>Home & furniture</small></button>
-<button data-category="Sports & Fitness">⚑<small>Sports</small></button>
-<button data-category="Jewellery & Watches">◇<small>Jewellery</small></button>
-<button data-category="Groceries">＋<small>Groceries</small></button>
-<button data-category="Automotive">↗<small>Automotive</small></button>
-<button data-category="Toys & Games">☆<small>Toys & games</small></button>
-</div>
-<div class="section-head product-head"><div><p class="eyebrow">A FEW GOOD PICKS</p><h2 id="productTitle">Explore popular finds</h2></div><span id="productCount"></span></div><div id="productGrid" class="grid"></div><p id="emptyState" class="empty" hidden>No products found. Try another search.</p><p id="loadMessage" class="notice"></p></section>
-<section class="seller-banner"><div><p class="eyebrow">GROW WITH KIVORA</p><h2>Have something<br>good to sell?</h2><p>Open your seller account and put your products in front of new customers.</p><button id="sellerBannerBtn" class="btn light">Start selling <span>→</span></button></div><div class="watermark">K<span>+</span></div></section>
-<section class="section" id="support"><div class="section-head"><div><p class="eyebrow">NEED A HAND?</p><h2>KIVORA customer care</h2></div><p>Questions about accounts, listings or shopping?</p></div><p>Browse the marketplace without an account. Sign in when you want to check out or manage your account. For help, message our team on WhatsApp.</p><a class="btn" href="https://wa.me/2348127817057" target="_blank" rel="noopener">Chat with customer care →</a><p class="fine">Secure card/bank payments and live order tracking will be enabled after the payment and order backend is configured.</p></section>
+<div class="topline"><span>WELCOME TO KIVORA</span><span class="topline-center">DISCOVER MORE. SHOP SMARTER.</span><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">HELP CENTRE ↗</a></div>
+<header class="main-header">
+  <a class="brand" href="#" aria-label="KIVORA home">KIV<span>O</span>RA<small>MARKETPLACE</small></a>
+  <form id="searchForm" class="searchbar"><span>⌕</span><input id="searchInput" placeholder="Search for products, brands and categories" aria-label="Search products"><button>SEARCH</button></form>
+  <nav class="head-actions">
+    <button id="accountBtn"><b class="action-icon">♙</b><span>Account<small>Sign in / Register</small></span></button>
+    <button id="ordersBtn"><b class="action-icon">▤</b><span>Orders<small>Track your orders</small></span></button>
+    <button id="cartBtn"><b class="action-icon">🛒</b><span>Cart<small><i id="cartCount">0</i> items</small></span></button>
+  </nav>
+</header>
+<nav class="category-nav" id="categoryNav">
+  <button data-category="All" class="active">All categories</button><button data-category="Smartphones">Phones & tablets</button><button data-category="Computers & Accessories">Computers</button><button data-category="Electronics">Electronics</button><button data-category="Fashion">Fashion</button><button data-category="Shoes & Bags">Shoes & bags</button><button data-category="Beauty">Health & beauty</button><button data-category="Home & Furniture">Home & living</button><button data-category="Sports & Fitness">Sports</button>
+</nav>
+
+<main class="page-wrap">
+  <section class="market-layout">
+    <aside class="side-categories">
+      <div class="side-title">SHOP BY CATEGORY</div>
+      <button data-category="Smartphones"><span>▣</span> Phones & Tablets <b>›</b></button>
+      <button data-category="Computers & Accessories"><span>⌨</span> Computing <b>›</b></button>
+      <button data-category="Electronics"><span>◉</span> Electronics <b>›</b></button>
+      <button data-category="Fashion"><span>♧</span> Fashion <b>›</b></button>
+      <button data-category="Shoes & Bags"><span>◈</span> Shoes & Bags <b>›</b></button>
+      <button data-category="Beauty"><span>✿</span> Health & Beauty <b>›</b></button>
+      <button data-category="Home & Furniture"><span>⌂</span> Home & Furniture <b>›</b></button>
+      <button data-category="Sports & Fitness"><span>⚑</span> Sports & Fitness <b>›</b></button>
+      <button data-category="Jewellery & Watches"><span>◇</span> Watches & Jewellery <b>›</b></button>
+      <button data-category="Toys & Games"><span>☆</span> Toys & Games <b>›</b></button>
+      <button data-category="Automotive"><span>⚙</span> Automotive <b>›</b></button>
+      <button data-category="Groceries"><span>＋</span> Groceries <b>›</b></button>
+    </aside>
+
+    <section class="hero-stage">
+      <div class="hero-copy">
+        <div class="hero-kicker"><span></span> THE KIVORA DISCOVERY EVENT</div>
+        <h1>Everything you want.<br><em>All in one place.</em></h1>
+        <p>Explore the latest tech, everyday essentials, style and more — all on KIVORA.</p>
+        <a href="#popular" class="hero-cta">EXPLORE THE MARKETPLACE <b>→</b></a>
+        <div class="hero-pagination"><i class="selected"></i><i></i><i></i></div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-orbit"></div>
+        <img class="hero-phone" src="https://commons.wikimedia.org/wiki/Special:FilePath/Samsung_S23_Ultra.jpg?width=900" alt="Samsung Galaxy S23 Ultra" onerror="this.src='https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=85'">
+        <div class="hero-product-label"><small>FEATURED DEVICE</small><strong>Galaxy S23 Ultra</strong><span>Explore premium smartphones</span></div>
+        <div class="hero-chip">KIVORA SELECT <b>✦</b></div>
+      </div>
+    </section>
+
+    <aside class="quick-panel">
+      <div class="quick-card"><span class="quick-icon">♙</span><div><b>YOUR ACCOUNT</b><small>Sign in for a better shopping experience.</small></div><button id="quickLogin">LOG IN / SIGN UP</button></div>
+      <div class="quick-card"><span class="quick-icon">▣</span><div><b>SELL ON KIVORA</b><small>Reach customers with your products.</small></div><button id="quickSell">OPEN A SELLER ACCOUNT</button></div>
+      <div class="quick-card help-card"><span class="quick-icon">◉</span><div><b>NEED HELP?</b><small>Our team is one message away.</small></div><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">CHAT ON WHATSAPP ↗</a></div>
+    </aside>
+  </section>
+
+  <section class="service-strip">
+    <div><b>✦</b><span><strong>DISCOVER MORE</strong><small>Thousands of product possibilities</small></span></div>
+    <div><b>◇</b><span><strong>SELLER COMMUNITY</strong><small>Independent stores and brands</small></span></div>
+    <div><b>↗</b><span><strong>SHOP WITH EASE</strong><small>Browse first, sign in when ready</small></span></div>
+    <div><b>◉</b><span><strong>HELP WHEN YOU NEED IT</strong><small>Contact KIVORA support</small></span></div>
+  </section>
+
+  <section class="shelf" id="popular">
+    <div class="shelf-heading"><div><small>HANDPICKED FOR YOU</small><h2>Popular right now</h2></div><div class="shelf-controls"><button data-scroll="popularRail" aria-label="Scroll left">‹</button><button data-scroll="popularRail" data-dir="right" aria-label="Scroll right">›</button></div></div>
+    <div class="product-rail" id="popularRail"></div>
+  </section>
+
+  <section class="deal-banner">
+    <div><small>THE TECH EDIT</small><h2>Level up your<br>everyday tech.</h2><p>Phones, laptops, audio and accessories.</p><button data-category="Smartphones">SHOP TECH <b>→</b></button></div>
+    <div class="deal-images"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=85" alt="Laptop computer"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85" alt="Wireless headphones"></div>
+  </section>
+
+  <section class="shelf" id="phonesShelf">
+    <div class="shelf-heading"><div><small>SMARTER CHOICES</small><h2>Phones & tablets</h2></div><button class="text-link" data-category="Smartphones">SEE ALL PHONES →</button></div>
+    <div class="product-rail" id="phonesRail"></div>
+  </section>
+
+  <section class="shelf" id="computersShelf">
+    <div class="shelf-heading"><div><small>WORK. CREATE. PLAY.</small><h2>Computers & accessories</h2></div><button class="text-link" data-category="Computers & Accessories">SEE ALL COMPUTERS →</button></div>
+    <div class="product-rail" id="computersRail"></div>
+  </section>
+
+  <section class="shelf" id="fashionShelf">
+    <div class="shelf-heading"><div><small>YOUR STYLE, YOUR WAY</small><h2>Fashion, shoes & bags</h2></div><button class="text-link" data-category="Fashion">EXPLORE FASHION →</button></div>
+    <div class="product-rail" id="fashionRail"></div>
+  </section>
+
+  <section class="shelf all-products">
+    <div class="shelf-heading"><div><small>THE KIVORA COLLECTION</small><h2 id="productTitle">Explore all products</h2><p id="productCount">Browse our starter collection</p></div></div>
+    <div id="productGrid" class="product-grid"></div>
+    <p id="emptyState" class="empty" hidden>No products found. Try another search or category.</p>
+    <p id="loadMessage" class="notice">Starter catalogue preview. Prices are indicative only.</p>
+  </section>
+
+  <section class="seller-promo">
+    <div class="seller-promo-mark">K<span>+</span></div><div><small>HAVE SOMETHING TO SELL?</small><h2>Your store deserves<br>a bigger stage.</h2><p>Join KIVORA and put your products in front of shoppers.</p></div><button id="sellerBannerBtn">START SELLING <b>→</b></button>
+  </section>
 </main>
-<footer><a class="logo" href="#">KIV<span>O</span>RA</a><p>Discover more. Shop smarter.</p><p><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">Contact KIVORA on WhatsApp</a></p><small>© <span id="year"></span> KIVORA</small></footer>
+<footer class="footer">
+  <div class="footer-brand"><a class="brand" href="#">KIV<span>O</span>RA<small>MARKETPLACE</small></a><p>Shop beyond borders. Discover more.</p></div>
+  <div><b>ABOUT KIVORA</b><a href="#popular">Shop marketplace</a><a href="#support">Customer care</a><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">Contact us on WhatsApp</a></div>
+  <div><b>SHOPPING</b><a href="#phonesShelf">Phones & tablets</a><a href="#computersShelf">Computers</a><a href="#fashionShelf">Fashion</a></div>
+  <div><b>SELL WITH US</b><a href="#" id="footerSell">Open a seller account</a><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">Seller support</a></div>
+  <div class="copyright">© <span id="year"></span> KIVORA. All rights reserved. <span>Secure checkout will be enabled after payment setup.</span></div>
+</footer>
+
 <div id="overlay" class="overlay"></div>
-<aside id="cartDrawer" class="drawer"><div class="drawer-head"><h3>Your cart</h3><button class="x" data-close>×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-bottom"><div class="total"><span>Subtotal</span><b id="cartTotal">₦0</b></div><button id="checkoutBtn" class="btn full">Continue to checkout</button><p class="fine">Payment checkout is not connected yet. Do not accept real orders until a payment provider is configured.</p></div></aside>
-<section id="authModal" class="modal"><button class="x modal-x" data-close>×</button><p class="eyebrow">WELCOME TO KIVORA</p><h2 id="authTitle">Your account, your finds.</h2><div class="tabs"><button class="active" data-mode="login">Log in</button><button data-mode="signup">Create account</button></div><form id="authForm"><label>Email address<input id="authEmail" type="email" required placeholder="you@example.com"></label><label>Password<input id="authPassword" type="password" minlength="6" required placeholder="At least 6 characters"></label><button id="authSubmit" class="btn full">Log in</button></form><p id="authMessage" class="notice"></p><p class="fine">Secure account handling is provided by Supabase Auth once configured. Never store customer passwords in website code.</p></section>
-<section id="sellerModal" class="modal"><button class="x modal-x" data-close>×</button><p class="eyebrow">KIVORA SELLER STUDIO</p><h2>List a product</h2><p class="fine">Sign in first. Your uploaded image will be stored and displayed with the product when the database is connected.</p><form id="productForm"><label>Product name<input id="pName" required maxlength="100" placeholder="e.g. Classic sneakers"></label><label>Category<select id="pCategory"><option>Fashion</option><option>Electronics</option><option>Beauty</option><option>Home & Furniture</option><option>Accessories</option><option>Smartphones</option><option>Computers & Accessories</option><option>Shoes & Bags</option><option>Sports & Fitness</option><option>Jewellery & Watches</option><option>Groceries</option><option>Automotive</option><option>Toys & Games</option><option>Other</option></select></label><label>Price (NGN)<input id="pPrice" type="number" min="1" step="1" required placeholder="e.g. 25000"></label><label>Description<textarea id="pDescription" maxlength="1000" required placeholder="Describe your product…"></textarea></label><label>Product photo<input id="pImage" type="file" accept="image/png,image/jpeg,image/webp" required></label><img id="imagePreview" class="preview" alt="Selected product preview" hidden><button id="productSubmit" class="btn full">Upload product</button></form><p id="sellerMessage" class="notice"></p></section>
-</body><script src="app.js"></script></html>
+<aside id="cartDrawer" class="drawer"><div class="drawer-head"><div><small>KIVORA SHOPPING BAG</small><h3>Your cart</h3></div><button class="x" data-close>×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-bottom"><div class="total"><span>Subtotal</span><b id="cartTotal">₦0</b></div><button id="checkoutBtn" class="primary-btn full">CONTINUE TO CHECKOUT →</button><p class="fine">You can browse and add products without an account. Sign in is required to continue. Secure payment is not live yet.</p></div></aside>
+
+<section id="authModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">WELCOME TO KIVORA</small><h2 id="authTitle">Your account, your finds.</h2><div class="tabs"><button class="active" data-mode="login">Log in</button><button data-mode="signup">Create account</button></div><form id="authForm"><label>Account type<select id="accountType"><option value="buyer">Buyer account</option><option value="seller">Seller account</option></select></label><label>Email address<input id="authEmail" type="email" required placeholder="you@example.com"></label><label>Password<input id="authPassword" type="password" minlength="6" required placeholder="At least 6 characters"></label><button id="authSubmit" class="primary-btn full">LOG IN</button></form><p id="authMessage" class="notice"></p><p class="fine">Your account is managed securely by Supabase Auth.</p></section>
+
+<section id="sellerModal" class="modal"><button class="x modal-x" data-close>×</button><small class="modal-kicker">KIVORA SELLER STUDIO</small><h2>List your product</h2><p class="fine">Upload a real product photo and accurate details. Your listing will appear in the marketplace when saved successfully.</p><form id="productForm"><label>Product name<input id="pName" required maxlength="100" placeholder="e.g. Samsung Galaxy S23 Ultra"></label><label>Category<select id="pCategory"><option>Smartphones</option><option>Computers & Accessories</option><option>Electronics</option><option>Fashion</option><option>Shoes & Bags</option><option>Beauty</option><option>Home & Furniture</option><option>Sports & Fitness</option><option>Jewellery & Watches</option><option>Toys & Games</option><option>Automotive</option><option>Groceries</option><option>Other</option></select></label><label>Price (NGN)<input id="pPrice" type="number" min="1" required placeholder="e.g. 250000"></label><label>Description<textarea id="pDescription" maxlength="1000" required placeholder="Describe the product, condition, storage, size or other details…"></textarea></label><label>Product photo<input id="pImage" type="file" accept="image/png,image/jpeg,image/webp" required></label><img id="imagePreview" class="preview" alt="Selected product preview" hidden><button id="productSubmit" class="primary-btn full">UPLOAD PRODUCT</button></form><p id="sellerMessage" class="notice"></p></section>
+<script src="app.js"></script>
+</body></html>

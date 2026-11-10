@@ -1,23 +1,23 @@
-# KIVORA Marketplace — upgraded starter
+# KIVORA Marketplace — redesigned storefront
 
-## Included
-- Four-second animated KIVORA intro followed by a public storefront (no forced sign-in).
-- Product search, category filters, product cards with product photography, and a local cart.
-- Supabase Auth configured with the project URL and public publishable key supplied by the owner.
-- Seller product upload and image storage using the existing `product-images` bucket.
-- WhatsApp customer-care contact.
-- Clear notice that checkout is not live and no real payments/orders are processed.
+This version keeps the KIVORA animated opening and changes the storefront into a responsive marketplace layout:
+- Full-screen black-and-gold opening animation with moving orbiting dots; it remains for 7 seconds.
+- Desktop layout uses a vertical category menu, wide central hero, and quick-action panel.
+- Horizontal category navigation and horizontally scrolling product shelves, plus a full product grid.
+- Mobile layout rearranges for phone screens with horizontal swipe product rows.
+- Preloaded sample catalogue includes named phones, computers, bags, fashion, home, beauty, sports and accessories with product photographs.
+- Visitors can browse and add products to cart before signing in.
+- Supabase Auth and seller photo upload remain connected to the provided project details.
 
-## Deploy
-1. Upload the contents of this `kivora` folder to the existing `Sile-dev/KIVORA-marketplace` GitHub repository, replacing the old site files.
-2. In Supabase, open SQL Editor and run `supabase_setup.sql` if you have not already run it.
-3. In Supabase → Authentication → URL Configuration, set Site URL to:
-   `https://sile-dev.github.io/KIVORA-marketplace/`
-   Add that same URL to Redirect URLs.
-4. Wait for GitHub Pages to redeploy, then test public browsing, signup/login and seller image upload.
+## Publish
+Replace the files in the existing `Sile-dev/KIVORA-marketplace` GitHub repository with the contents of this folder. Keep the same GitHub Pages settings.
+
+## Supabase
+The website contains the Supabase project URL and public publishable key provided by the owner. Run `supabase_setup.sql` in the Supabase SQL Editor if it has not already been run. Set the Supabase Auth Site URL and Redirect URL to:
+`https://sile-dev.github.io/KIVORA-marketplace/`
 
 ## Important
-- The frontend contains only the Supabase project URL and public publishable key. Never put a Supabase service-role/secret key in browser code.
-- Sample products and prices are illustrative catalogue previews, not verified live stock or guaranteed market quotes. Sellers must replace them with accurate listings.
-- Secure checkout, real orders, refunds, shipping status and an AI-connected support agent are not activated in this static frontend. They require server-side services, payment gateway/webhook configuration and a support backend.
-- Sample product photos are hosted by Unsplash. Seller-uploaded photos are stored in the Supabase `product-images` bucket.
+- Catalogue prices are indicative demonstration prices, not live quotes or guaranteed stock. Sellers must confirm product model, storage, condition, warranty and current price.
+- Product photos are used as catalogue previews. Some product images may be illustrative where exact official imagery is not available.
+- Secure payment processing, actual order placement, refunds, shipping updates and AI-connected customer care are not yet activated. Do not accept real payments/orders until those backend services are implemented.
+- Only a Supabase public publishable key is included in frontend code. Never put a service-role or secret key in the browser.
