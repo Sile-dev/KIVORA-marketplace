@@ -127,9 +127,9 @@ document.addEventListener("click",e=>{
  if(e.target.matches("[data-close]")||e.target===$("overlay"))closeAll();
 });
 $("searchForm").addEventListener("submit",e=>{e.preventDefault();search=$("searchInput").value.trim().replace(/\\s+/g," ");category="All";document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active",b.dataset.category==="All"));renderProducts();$("popular").scrollIntoView({behavior:"smooth"})});
-$("accountBtn").onclick=$("quickLogin").onclick=()=>startAuth("buyer","login");
+$("accountBtn").onclick=$("quickLogin").onclick=()=>{location.href="account.html"};
 $("ordersBtn").onclick=()=>{if(!currentUser){startAuth("buyer","login");msg("authMessage","Log in to view your account and order history.");}else alert("Order history will appear here after secure checkout and order processing are enabled.");};
-$("quickSell").onclick=$("sellerBannerBtn").onclick=$("footerSell").onclick=()=>{if(!currentUser){startAuth("seller","signup");msg("authMessage","Create a seller account to open your KIVORA store.");return}if(currentUser.user_metadata?.account_type!=="seller"){startAuth("seller","signup");msg("authMessage","Use a seller account to list products.");return}openModal("sellerModal")};
+$("quickSell").onclick=$("sellerBannerBtn").onclick=$("footerSell").onclick=()=>{location.href="seller.html"};
 $("cartBtn").onclick=()=>{$("overlay").classList.add("show");$("cartDrawer").classList.add("open")};
 $("checkoutBtn").onclick=()=>{if(!currentUser){closeAll();startAuth("buyer","login");msg("authMessage","Sign in or create an account to continue to checkout.");return}alert("Your cart is saved. Secure payment processing is not configured yet, so no order or payment has been placed.");};
 let pendingProfile={};
@@ -178,3 +178,7 @@ if(db){db.auth.getSession().then(({data})=>{if(data.session)currentUser=data.ses
     }finally{send.disabled=false;messages.scrollTop=messages.scrollHeight;input.focus()}
   });
 })();
+
+// Deep link into seller product studio from the seller centre.
+const openSellerNow=new URLSearchParams(location.search).get("open")==="seller";
+if(openSellerNow){setTimeout(()=>{if(currentUser?.user_metadata?.account_type==="seller")openModal("sellerModal");else startAuth("seller","signup");},900);}

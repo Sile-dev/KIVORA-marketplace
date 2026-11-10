@@ -42,6 +42,11 @@
   <button data-category="Toys & Games">Toys & games</button><button data-category="Automotive">Automotive</button>
   <button data-category="Other">More</button>
 </nav>
+<div class="market-shortcuts">
+  <a href="#popular">Discover</a><a href="#popular">Popular products</a><a href="#phonesShelf">Tech deals</a>
+  <a href="seller.html" class="seller-shortcut">Sell on KIVORA <span>⌄</span></a>
+  <a href="account.html">My KIVORA</a><a href="support.html">Help centre</a>
+</div>
 
 <main class="page-wrap">
   <section class="market-layout">
@@ -58,7 +63,7 @@
       <button data-category="Jewellery & Watches"><span>◇</span> Jewellery & Watches <b>›</b></button>
       <button data-category="Toys & Games"><span>☆</span> Toys & Games <b>›</b></button>
       <button data-category="Automotive"><span>⚙</span> Automotive <b>›</b></button>
-      <button data-category="Groceries"><span>＋</span> Groceries & Drinks <b>›</b>
+      <button data-category="Groceries"><span>＋</span> Groceries & Drinks <b>›</b></button>
       <button data-category="Baby & Kids"><span>♧</span> Baby & Kids <b>›</b></button>
       <button data-category="Books & Stationery"><span>▤</span> Books & Stationery <b>›</b></button>
       <button data-category="Appliances"><span>▣</span> Home Appliances <b>›</b></button>
@@ -68,7 +73,7 @@
       <button data-category="Travel & Luggage"><span>▱</span> Travel & Luggage <b>›</b></button>
       <button data-category="Pet Supplies"><span>♡</span> Pet Supplies <b>›</b></button>
       <button data-category="Musical Instruments"><span>♫</span> Musical Instruments <b>›</b></button>
-      <button data-category="Industrial & Business"><span>⚙</span> Business & Industrial <b>›</b></button></button>
+      <button data-category="Industrial & Business"><span>⚙</span> Business & Industrial <b>›</b></button>
     </aside>
 
     <section class="hero-stage">
@@ -149,6 +154,13 @@
     <div class="seller-promo-mark">K<span>+</span></div><div><small>HAVE SOMETHING TO SELL?</small><h2>Your store deserves<br>a bigger stage.</h2><p>Join KIVORA and put your products in front of shoppers.</p></div><button id="sellerBannerBtn">START SELLING <b>→</b></button>
   </section>
 </main>
+<nav class="mobile-dock" aria-label="Quick navigation">
+  <a href="#" class="dock-active"><b>⌂</b><span>Home</span></a>
+  <a href="#popular"><b>▦</b><span>Explore</span></a>
+  <button id="dockCart"><b>▱</b><span>Cart</span></button>
+  <button id="dockOrders"><b>▤</b><span>Orders</span></button>
+  <button id="dockProfile"><b>♙</b><span>Profile</span></button>
+</nav>
 <footer class="footer">
   <div class="footer-brand"><a class="brand" href="#">KIV<span>O</span>RA<small>MARKETPLACE</small></a><p>Shop beyond borders. Discover more.</p></div>
   <div><b>ABOUT KIVORA</b><a href="#popular">Shop marketplace</a><a href="#support">Customer care</a><a href="https://wa.me/2348127817057" target="_blank" rel="noopener">Contact us on WhatsApp</a></div>
@@ -208,4 +220,9 @@
 })();
 </script>
 <script src="app.js"></script>
+<script>
+document.getElementById("dockCart")?.addEventListener("click",()=>document.getElementById("cartBtn")?.click());
+document.getElementById("dockOrders")?.addEventListener("click",()=>document.getElementById("ordersBtn")?.click());
+document.getElementById("dockProfile")?.addEventListener("click",()=>document.getElementById("accountBtn")?.click());
+</script>
 </body></html>

@@ -78,3 +78,21 @@ Configure production SMTP in Supabase Authentication settings and use an email t
 
 ## Visual refresh
 This build adds an editorial, image-led department discovery grid, stronger marketplace hierarchy, upgraded product-card interactions, richer hero and promotional banners, and a compact marketplace promise strip. It preserves the existing Supabase client configuration, account flow, seller flow, product rendering and AI support integration.
+
+
+## Campus Mart-inspired, original KIVORA visual refresh
+This build uses the supplied Campus Mart screenshot as a reference for clear mobile marketplace navigation and product discovery, while retaining an original KIVORA layout, typography, category structure and black/gold/white identity. It does not reuse Campus Mart branding or copy its visual assets.
+
+### Updated experience
+- Reworked the storefront visual hierarchy with a dark premium masthead, gold-accented search, category navigation, seller shortcuts, collection cards, product rails and a mobile quick-navigation dock.
+- Fixed malformed category markup in the home page.
+- Added a dedicated `account.html` page with passwordless email-code login and registration using the same existing Supabase project and public key. Buyer/seller role and profile data are saved to the existing `profiles` table.
+- Rebuilt `seller.html` as a seller-centre landing page and added a deep link to the existing seller product upload flow.
+- Rebuilt `support.html` as a help centre.
+- Preserved `app.js`, the existing product catalogue, Supabase SQL, logo and Edge Function source except for routing account/seller navigation to their dedicated pages.
+
+### Publish
+Replace the website files in the root of the existing GitHub Pages repository with the files in this ZIP. Keep the `supabase` folder and run `supabase_setup.sql` only if the database setup has not already been completed. Do not change the existing Supabase project URL or public key.
+
+### Important readiness note
+The storefront, email-code authentication and seller product upload flow are included. Payment processing, order fulfilment, shipping integrations, refund handling and production-grade seller verification are not activated. Do not accept real payments until those services are configured and tested.
