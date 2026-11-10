@@ -74,3 +74,7 @@ The ZIP includes the Edge Function source. Supabase's web dashboard may not prov
 
 ## Supabase email settings
 Configure production SMTP in Supabase Authentication settings and use an email template that clearly displays the one-time code (`{{ .Token }}`). The current default Supabase sender may be rate-limited. Test signup and login with separate email addresses before public launch.
+
+
+## Visual refresh
+This build adds an editorial, image-led department discovery grid, stronger marketplace hierarchy, upgraded product-card interactions, richer hero and promotional banners, and a compact marketplace promise strip. It preserves the existing Supabase client configuration, account flow, seller flow, product rendering and AI support integration.
